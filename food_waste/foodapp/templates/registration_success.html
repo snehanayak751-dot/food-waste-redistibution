@@ -1,0 +1,36 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="container d-flex justify-content-center align-items-center" style="min-height: 80vh;">
+    <div class="card shadow-lg border-0 text-center" style="border-radius: 20px; width: 100%; max-width: 500px;">
+        <div class="card-body p-5">
+            <div class="mb-4">
+                <span class="display-3" style="color: #1a6b3c;">✔</span>
+            </div>
+            
+            <h2 class="font-playfair fw-bold mb-3" style="color: #1a6b3c;">Registration Successful!</h2>
+            <p class="text-muted mb-4">
+                Thank you for joining our network as an authorized <strong>{{ role }}</strong>. 
+                Your profile has been compiled into the system database.
+            </p>
+            
+            <div class="alert p-4 my-4 border-0 shadow-sm" style="background-color: #f4f9f5; border-radius: 15px;">
+                <small class="text-uppercase fw-bold text-muted d-block mb-2" style="letter-spacing: 1px;">
+                    Your Unique Login ID
+                </small>
+                <div class="display-5 font-monospace fw-bold tracking-id-box" style="color: #1a6b3c; letter-spacing: 2px;">
+                    {{ unique_id }}
+                </div>
+            </div>
+            
+            <p class="text-danger small fw-bold mb-4">
+                ⚠ Please write down or save this ID! You must enter it instead of a username to log into your dashboard.
+            </p>
+            
+            <a href="{% url 'login' %}" class="btn w-100 text-white fw-bold rounded-pill shadow-sm" 
+               style="background: #1a6b3c; padding: 12px; transition: 0.3s;">
+                Proceed to Login
+            </a>
+        </div>
+    </div>
+</div>
+{% endblock %}

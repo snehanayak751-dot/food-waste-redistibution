@@ -1,0 +1,464 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;800&family=DM+Sans:wght@300;400;500;600&display=swap');
+
+  :root {
+    --leaf: #1a6b3c;
+    --leaf-mid: #2d9b5a;
+    --leaf-light: #4dc87a;
+    --cream: #faf7f2;
+    --warm: #f5ede0;
+    --gold: #e8a020;
+    --text-dark: #1a1a1a;
+    --text-mid: #4a5568;
+  }
+
+  body { background: var(--cream); font-family: 'DM Sans', sans-serif; }
+
+  /* ── HERO ── */
+  .hero {
+    position: relative;
+    min-height: 92vh;
+    display: flex;
+    align-items: center;
+    overflow: hidden;
+    background: linear-gradient(135deg, #0d3d22 0%, #1a6b3c 50%, #2d9b5a 100%);
+    border-radius: 0 0 60px 60px;
+    margin: -1.5rem -12px 0;
+    padding: 0 24px;
+  }
+
+  .hero-bg-pattern {
+    position: absolute; inset: 0;
+    background-image: radial-gradient(circle at 20% 50%, rgba(77,200,122,0.15) 0%, transparent 50%),
+                      radial-gradient(circle at 80% 20%, rgba(232,160,32,0.1) 0%, transparent 40%),
+                      radial-gradient(circle at 60% 80%, rgba(255,255,255,0.05) 0%, transparent 40%);
+  }
+
+  .hero-grid {
+    position: absolute; inset: 0;
+    background-image: linear-gradient(rgba(255,255,255,0.03) 1px, transparent 1px),
+                      linear-gradient(90deg, rgba(255,255,255,0.03) 1px, transparent 1px);
+    background-size: 60px 60px;
+  }
+
+  .hero-content {
+    position: relative; z-index: 2;
+    max-width: 700px;
+    animation: fadeUp 0.9s ease both;
+  }
+
+  .hero-badge {
+    display: inline-flex; align-items: center; gap: 8px;
+    background: rgba(255,255,255,0.12);
+    border: 1px solid rgba(255,255,255,0.2);
+    color: #a8f0c6; font-size: 13px; font-weight: 500;
+    padding: 6px 16px; border-radius: 100px;
+    margin-bottom: 28px; backdrop-filter: blur(10px);
+    animation: fadeUp 0.7s ease both;
+  }
+
+  .hero-title {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(2.8rem, 6vw, 4.5rem);
+    font-weight: 800; line-height: 1.1;
+    color: #ffffff; margin-bottom: 24px;
+    animation: fadeUp 0.8s 0.1s ease both;
+  }
+
+  .hero-title span { color: #4dc87a; }
+
+  .hero-desc {
+    font-size: 18px; line-height: 1.7;
+    color: rgba(255,255,255,0.75);
+    margin-bottom: 40px; font-weight: 300;
+    max-width: 560px;
+    animation: fadeUp 0.8s 0.2s ease both;
+  }
+
+  .hero-btns {
+    display: flex; gap: 14px; flex-wrap: wrap;
+    animation: fadeUp 0.8s 0.3s ease both;
+  }
+
+  .btn-hero-primary {
+    background: #ffffff; color: var(--leaf);
+    border: none; border-radius: 100px;
+    padding: 14px 32px; font-size: 15px; font-weight: 600;
+    text-decoration: none; transition: all 0.25s;
+    box-shadow: 0 8px 32px rgba(0,0,0,0.2);
+    display: inline-flex; align-items: center; gap: 8px;
+  }
+  .btn-hero-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 12px 40px rgba(0,0,0,0.3);
+    color: var(--leaf);
+  }
+
+  .btn-hero-outline {
+    background: rgba(255,255,255,0.1);
+    color: #ffffff; border: 1.5px solid rgba(255,255,255,0.35);
+    border-radius: 100px; padding: 14px 32px;
+    font-size: 15px; font-weight: 500;
+    text-decoration: none; transition: all 0.25s;
+    display: inline-flex; align-items: center; gap: 8px;
+    backdrop-filter: blur(10px);
+  }
+  .btn-hero-outline:hover {
+    background: rgba(255,255,255,0.2);
+    color: #ffffff; transform: translateY(-2px);
+  }
+
+  .hero-floats {
+    position: absolute; right: 5%; top: 50%;
+    transform: translateY(-50%);
+    display: grid; grid-template-columns: 1fr 1fr;
+    gap: 16px; z-index: 2;
+    animation: fadeLeft 1s 0.4s ease both;
+  }
+  .float-card {
+    background: rgba(255,255,255,0.1);
+    backdrop-filter: blur(20px);
+    border: 1px solid rgba(255,255,255,0.15);
+    border-radius: 20px; padding: 20px;
+    text-align: center; min-width: 110px;
+    transition: transform 0.3s;
+  }
+  .float-card:hover { transform: translateY(-6px); }
+  .float-card .icon { font-size: 2.2rem; margin-bottom: 6px; }
+  .float-card .label { font-size: 11px; color: rgba(255,255,255,0.7); font-weight: 500; }
+  .float-card.offset { margin-top: 28px; }
+
+  /* ── STATS ── */
+  .stats-section {
+    margin: -40px 0 60px;
+    position: relative; z-index: 10;
+  }
+  .stats-wrap {
+    background: #ffffff;
+    border-radius: 24px;
+    box-shadow: 0 20px 60px rgba(0,0,0,0.08);
+    padding: 36px 40px;
+    display: grid; grid-template-columns: repeat(3, 1fr);
+    gap: 0;
+  }
+  .stat-item {
+    text-align: center; padding: 10px 20px;
+    position: relative;
+  }
+  .stat-item:not(:last-child)::after {
+    content: '';
+    position: absolute; right: 0; top: 15%; bottom: 15%;
+    width: 1px; background: #e8e8e8;
+  }
+  .stat-num {
+    font-family: 'Playfair Display', serif;
+    font-size: 3rem; font-weight: 800;
+    line-height: 1; margin-bottom: 6px;
+  }
+  .stat-label { font-size: 13px; color: var(--text-mid); font-weight: 500; }
+  .stat-sub { font-size: 11px; color: #a0aec0; margin-top: 2px; }
+  .c-green { color: var(--leaf); }
+  .c-blue  { color: #3182ce; }
+  .c-gold  { color: var(--gold); }
+
+  /* ── HOW IT WORKS ── */
+  .section-tag {
+    display: inline-block; font-size: 12px; font-weight: 600;
+    letter-spacing: .08em; text-transform: uppercase;
+    color: var(--leaf-mid); margin-bottom: 10px;
+  }
+  .section-title {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(1.8rem, 4vw, 2.6rem); font-weight: 700;
+    color: var(--text-dark); margin-bottom: 12px; line-height: 1.2;
+  }
+  .section-desc { color: var(--text-mid); font-size: 16px; font-weight: 300; max-width: 500px; }
+
+  .step-card {
+    background: #ffffff;
+    border-radius: 20px;
+    padding: 32px 28px;
+    height: 100%;
+    position: relative;
+    transition: all 0.3s;
+    border: 1px solid #eef0f0;
+    overflow: hidden;
+  }
+  .step-card::before {
+    content: '';
+    position: absolute; top: 0; left: 0; right: 0;
+    height: 4px;
+  }
+  .step-card.s1::before { background: linear-gradient(90deg, #1a6b3c, #4dc87a); }
+  .step-card.s2::before { background: linear-gradient(90deg, #3182ce, #63b3ed); }
+  .step-card.s3::before { background: linear-gradient(90deg, #e8a020, #f6c458); }
+  .step-card:hover { transform: translateY(-6px); box-shadow: 0 20px 50px rgba(0,0,0,0.08); }
+
+  .step-num {
+    font-family: 'Playfair Display', serif;
+    font-size: 3.5rem; font-weight: 800;
+    line-height: 1; opacity: 0.07; color: #1a1a1a;
+    position: absolute; top: 20px; right: 24px;
+  }
+  .step-icon { font-size: 2.4rem; margin-bottom: 16px; }
+  .step-title-sm {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.2rem; font-weight: 700;
+    color: var(--text-dark); margin-bottom: 10px;
+  }
+  .step-desc { font-size: 14px; color: var(--text-mid); line-height: 1.7; margin-bottom: 20px; }
+
+  .btn-step {
+    display: inline-flex; align-items: center; gap: 6px;
+    font-size: 13px; font-weight: 600;
+    text-decoration: none; padding: 8px 18px;
+    border-radius: 100px; transition: all 0.2s;
+    border: 1.5px solid currentColor;
+  }
+  .btn-step.green { color: var(--leaf); }
+  .btn-step.green:hover { background: var(--leaf); color: white; }
+  .btn-step.blue { color: #3182ce; }
+  .btn-step.blue:hover { background: #3182ce; color: white; }
+  .btn-step.gold { color: var(--gold); }
+  .btn-step.gold:hover { background: var(--gold); color: white; }
+
+  /* ── FOOD TABLE ── */
+  .food-section {
+    background: var(--warm);
+    border-radius: 32px; padding: 48px 40px;
+    margin-bottom: 60px;
+  }
+  .food-table { border-radius: 16px; overflow: hidden; background: white; }
+  .food-table thead { background: linear-gradient(135deg, #1a6b3c, #2d9b5a); }
+  .food-table thead th { color: white; font-weight: 500; font-size: 13px; letter-spacing: .03em; padding: 14px 16px; border: none; }
+  .food-table tbody tr { transition: background 0.15s; border-bottom: 1px solid #f0f0f0; }
+  .food-table tbody tr:hover { background: #f7fdf9; }
+  .food-table tbody td { padding: 14px 16px; font-size: 14px; vertical-align: middle; border: none; }
+
+  .badge-avail {
+    background: #e6f7ee; color: #1a6b3c;
+    font-size: 11px; font-weight: 600; padding: 4px 10px;
+    border-radius: 100px; letter-spacing: .03em;
+  }
+  .btn-req {
+    background: var(--leaf); color: white; border: none;
+    border-radius: 100px; padding: 6px 16px; font-size: 12px;
+    font-weight: 600; text-decoration: none; transition: all 0.2s;
+  }
+  .btn-req:hover { background: var(--leaf-mid); color: white; transform: scale(1.04); }
+
+  /* ── IMPACT BANNER ── */
+  .impact-banner {
+    background: linear-gradient(135deg, #0d3d22, #1a6b3c);
+    border-radius: 28px; padding: 52px 48px;
+    color: white; margin-bottom: 60px;
+    position: relative; overflow: hidden;
+  }
+  .impact-banner::after {
+    content: '🌿';
+    position: absolute; right: 40px; bottom: -10px;
+    font-size: 8rem; opacity: 0.08;
+  }
+  .impact-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 2rem; font-weight: 700; margin-bottom: 12px;
+  }
+  .impact-desc { color: rgba(255,255,255,0.7); font-size: 16px; font-weight: 300; margin-bottom: 28px; }
+  .impact-btns { display: flex; gap: 12px; flex-wrap: wrap; }
+  .btn-white {
+    background: white; color: var(--leaf);
+    border-radius: 100px; padding: 12px 28px;
+    font-size: 14px; font-weight: 600;
+    text-decoration: none; transition: all 0.2s;
+    display: inline-flex; align-items: center; gap: 6px;
+  }
+  .btn-white:hover { transform: translateY(-2px); box-shadow: 0 8px 24px rgba(0,0,0,0.2); color: var(--leaf); }
+  .btn-ghost-white {
+    background: transparent; color: white;
+    border: 1.5px solid rgba(255,255,255,0.4);
+    border-radius: 100px; padding: 12px 28px;
+    font-size: 14px; font-weight: 500;
+    text-decoration: none; transition: all 0.2s;
+    display: inline-flex; align-items: center; gap: 6px;
+  }
+  .btn-ghost-white:hover { background: rgba(255,255,255,0.1); color: white; }
+
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(30px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+  @keyframes fadeLeft {
+    from { opacity: 0; transform: translate(30px, -50%); }
+    to   { opacity: 1; transform: translate(0, -50%); }
+  }
+
+  @media (max-width: 768px) {
+    .hero-floats { display: none; }
+    .stats-wrap { grid-template-columns: 1fr; }
+    .stat-item::after { display: none; }
+    .food-section { padding: 32px 20px; }
+    .impact-banner { padding: 36px 24px; }
+  }
+</style>
+
+<!-- ═══ HERO ═══ -->
+<div class="hero">
+  <div class="hero-bg-pattern"></div>
+  <div class="hero-grid"></div>
+  <div class="hero-content">
+    <div class="hero-badge">
+      <span>🌿</span> Mysuru's Food Redistribution Network
+    </div>
+    <h1 class="hero-title">
+      Turning Food<br>Waste into <span>Hope</span>
+    </h1>
+    <p class="hero-desc">
+      We connect hotels, canteens and restaurants with NGOs and volunteers — so surplus food reaches people who need it, before it's too late.
+    </p>
+    <div class="hero-btns">
+      <a href="{% url 'add_food' %}" class="btn-hero-primary">🍱 Donate Food</a>
+      <a href="{% url 'request_food' %}" class="btn-hero-outline">📋 Request Food</a>
+    </div>
+  </div>
+
+  <div class="hero-floats">
+    <div class="float-card">
+      <div class="icon">🏨</div>
+      <div class="label">Hotels</div>
+    </div>
+    <div class="float-card offset">
+      <div class="icon">🤝</div>
+      <div class="label">NGOs</div>
+    </div>
+    <div class="float-card">
+      <div class="icon">🍱</div>
+      <div class="label">Food</div>
+    </div>
+    <div class="float-card offset">
+      <div class="icon">🚴</div>
+      <div class="label">Volunteers</div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ STATS ═══ -->
+<div class="stats-section">
+  <div class="container">
+    <div class="stats-wrap">
+      <div class="stat-item">
+        <div class="stat-num c-green">{{ total_batches }}</div>
+        <div class="stat-label">Total food batches logged</div>
+        <div class="stat-sub">Since we started</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-num c-blue">{{ available_now }}</div>
+        <div class="stat-label">Batches available now</div>
+        <div class="stat-sub">Ready for pickup</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-num c-gold">{{ successful_deliveries }}</div>
+        <div class="stat-label">Successful deliveries</div>
+        <div class="stat-sub">Lives impacted</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ HOW IT WORKS ═══ -->
+<div class="container mb-5">
+  <div class="row align-items-center mb-4">
+    <div class="col-md-6">
+      <span class="section-tag">The Process</span>
+      <h2 class="section-title">How FoodBridge Works</h2>
+      <p class="section-desc">Simple steps to make sure no good food goes to waste in our city.</p>
+    </div>
+  </div>
+  <div class="row g-4 justify-content-center">
+    <div class="col-md-5">
+      <div class="step-card s2">
+        <div class="step-num">01</div>
+        <div class="step-icon">🤝</div>
+        <h5 class="step-title-sm">NGOs Browse & Request</h5>
+        <p class="step-desc">Registered NGOs browse all available food batches and submit requests for what their communities need most.</p>
+        <a href="{% url 'register_ngo' %}" class="btn-step blue">Register NGO →</a>
+      </div>
+    </div>
+    <div class="col-md-5">
+      <div class="step-card s3">
+        <div class="step-num">02</div>
+        <div class="step-icon">🚴</div>
+        <h5 class="step-title-sm">Volunteers Deliver</h5>
+        <p class="step-desc">Volunteers pick up food from donors and deliver it to NGOs — every step is tracked in our system.</p>
+        <a href="{% url 'volunteer_dashboard' %}" class="btn-step gold">Volunteer Dashboard →</a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ RECENT FOOD TABLE ═══ -->
+<div class="container">
+  <div class="food-section">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+      <div>
+        <span class="section-tag">Live Feed</span>
+        <h2 class="section-title mb-0">Available Food Right Now</h2>
+      </div>
+      <a href="{% url 'food_list' %}" class="btn-step green">View All →</a>
+    </div>
+    <div class="food-table">
+      <table class="table mb-0">
+        <thead class="food-table">
+          <tr>
+            <th>🍱 Food Item</th>
+            <th>🏨 Donor</th>
+            <th>📦 Quantity</th>
+            <th>⏰ Logged On</th>
+            <th>Status</th>
+            <th>Action</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for food in recent_food %}
+          <tr>
+            <td><strong>{{ food.name }}</strong></td>
+            <td>{{ food.donor_name }}</td>
+            <td>{{ food.quantity }}</td>
+            <td>{{ food.created_at|date:"d M, H:i" }}</td>
+            <td><span class="badge-avail">Available</span></td>
+            <td><a href="{% url 'request_food' %}" class="btn-req">Request →</a></td>
+          </tr>
+          {% empty %}
+          <tr>
+            <td colspan="6" class="text-center py-5 text-muted">
+              <div style="font-size:2.5rem;margin-bottom:10px">🍽️</div>
+              No food available yet.<br>
+              <a href="{% url 'add_food' %}" class="btn-req d-inline-block mt-3">+ Add First Batch</a>
+            </td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ IMPACT CALL TO ACTION ═══ -->
+<div class="container">
+  <div class="impact-banner">
+    <div class="row align-items-center">
+      <div class="col-md-8">
+        <h3 class="impact-title">Every Meal Saved is a Life Touched</h3>
+        <p class="impact-desc">Join Mysuru's growing network of donors, NGOs and volunteers working together to eliminate food waste and hunger.</p>
+        <div class="impact-btns">
+          <a href="{% url 'register_ngo' %}" class="btn-white">🤝 Register NGO</a>
+          <a href="{% url 'volunteer_dashboard' %}" class="btn-ghost-white">🚴 Volunteer Dashboard</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+{% endblock %}

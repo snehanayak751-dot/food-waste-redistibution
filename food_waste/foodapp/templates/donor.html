@@ -1,0 +1,48 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-md-6">
+        <div class="card shadow">
+            <div class="card-header bg-success text-white">
+                <h3 class="card-title mb-0">Donor Registration</h3>
+            </div>
+            <div class="card-body">
+                <p class="text-muted">Join FoodBridge to help reduce waste and feed those in need.</p>
+                <hr>
+                
+                <form method="POST">
+                    {% csrf_token %}
+                    
+                    <div class="mb-3">
+                        <label for="name" class="form-label">Full Name or Organization</label>
+                        <input type="text" class="form-control" id="name" name="name" placeholder="Enter name" required>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="email" class="form-label">Email Address</label>
+                        <input type="email" class="form-control" id="email" name="email" placeholder="name@example.com" required>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="phone" class="form-label">Phone Number</label>
+                        <input type="text" class="form-control" id="phone" name="phone" placeholder="Contact number" required>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="address" class="form-label">Pick-up Address</label>
+                        <textarea class="form-control" id="address" name="address" rows="3" placeholder="Where will the food be collected from?" required></textarea>
+                    </div>
+
+                    <div class="d-grid gap-2">
+                        <button type="submit" class="btn btn-success">Create Donor Account</button>
+                    </div>
+                </form>
+            </div>
+            <div class="card-footer text-center">
+                <small>Already registered? <a href="/admin/" class="text-success">Login here</a></small>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

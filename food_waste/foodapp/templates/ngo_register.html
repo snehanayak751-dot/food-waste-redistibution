@@ -1,0 +1,56 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="row justify-content-center mt-4 mb-5">
+    <div class="col-md-5">
+        <div class="card shadow border-0" style="border-radius: 15px;">
+            <div class="card-header bg-success text-white text-center" style="border-top-left-radius: 15px; border-top-right-radius: 15px;">
+                <h3 class="mb-0">NGO Sign Up</h3>
+            </div>
+            <div class="card-body p-4">
+                {% if messages %}
+                    {% for message in messages %}
+                        <div class="alert alert-danger small p-2 text-center" role="alert">
+                            {{ message }}
+                        </div>
+                    {% endfor %}
+                {% endif %}
+                
+                <form method="POST" action="{% url 'register_ngo' %}">
+                    {% csrf_token %}
+                    
+                    <div class="mb-2">
+                        <label class="form-label small fw-bold">Email Address</label>
+                        <input type="email" name="email" class="form-control" placeholder="name@organization.org" required>
+                    </div>
+                    
+                    <div class="mb-3">
+                        <label class="form-label small fw-bold">Password</label>
+                        <input type="password" name="password" class="form-control" placeholder="••••••••" required>
+                    </div>
+                    
+                    <hr class="text-muted my-3">
+                    
+                    <div class="mb-2">
+                        <label class="form-label small fw-bold">NGO Official Name</label>
+                        <input type="text" name="ngo_name" class="form-control" placeholder="e.g., Helping Hands Foundation" required>
+                    </div>
+                    
+                    <div class="mb-2">
+                        <label class="form-label small fw-bold">Contact Number</label>
+                        <input type="text" name="phone" class="form-control" placeholder="e.g., 9876543210" required>
+                    </div>
+                    
+                    <div class="mb-3">
+                        <label class="form-label small fw-bold">Address / Headquarters Location</label>
+                        <textarea name="address" class="form-control" rows="3" placeholder="Enter complete physical delivery address..." required></textarea>
+                    </div>
+                    
+                    <button type="submit" class="btn btn-success w-100 py-2 fw-bold rounded-pill shadow-sm" style="background-color: #1a6b3c; border: none;">
+                        Register Account
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,55 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="container d-flex justify-content-center align-items-center" style="min-height: 80vh;">
+    <div class="card shadow-lg border-0" style="border-radius: 20px; width: 100%; max-width: 400px;">
+        <div class="card-body p-5">
+            <div class="text-center mb-4">
+                <h2 class="font-playfair fw-bold" style="color: #1a6b3c;">FoodBridge</h2>
+                <p class="text-muted">Welcome back! Please login.</p>
+            </div>
+            
+            {% if messages %}
+                <div class="messages mb-3">
+                    {% for message in messages %}
+                        <div class="alert alert-danger p-2 small text-center rounded-pill border-0" role="alert">
+                            {{ message }}
+                        </div>
+                    {% endfor %}
+                </div>
+            {% endif %}
+            
+            <form method="POST" action="{% url 'user_login' %}">
+                {% csrf_token %}
+                
+                <div class="mb-3">
+                    <label class="form-label small fw-bold text-muted">Unique ID (NGO-XXXX or VOL-XXXX):</label>
+                    <input type="text" name="custom_id" class="form-control rounded-pill" required placeholder="e.g. VOL-1001">
+                </div>
+                
+                <div class="mb-4">
+                    <label class="form-label small fw-bold text-muted">Password:</label>
+                    <input type="password" name="password" class="form-control rounded-pill" required placeholder="••••••••">
+                </div>
+                
+                <div class="d-grid">
+                    <button type="submit" class="btn btn-success rounded-pill fw-bold" style="background-color: #1a6b3c; border: none;">
+                        Login
+                    </button>
+                </div>
+            </form>
+            
+            <div class="text-center mt-4">
+                <small class="text-muted d-block mb-3">Don't have an account?</small>
+                <div class="d-grid gap-2">
+                    <a href="{% url 'register_ngo' %}" class="btn btn-outline-success btn-sm rounded-pill fw-bold">
+                        Register as NGO
+                    </a>
+                    <a href="{% url 'register_volunteer' %}" class="btn btn-outline-dark btn-sm rounded-pill fw-bold">
+                        Join as Volunteer
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

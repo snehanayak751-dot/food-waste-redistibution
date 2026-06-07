@@ -1,0 +1,50 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <div class="card shadow-lg border-0" style="border-radius: 20px;">
+                <div class="card-body p-5 text-center">
+                    <div class="rounded-circle bg-light d-inline-flex justify-content-center align-items-center mb-4" 
+                         style="width: 100px; height: 100px;">
+                        <i class="bi bi-person-circle" style="font-size: 4rem; color: #1a6b3c;"></i>
+                    </div>
+                    
+                    <h2 class="fw-bold mb-1">{{ user.username }}</h2>
+                    
+                    {% if ngo %}
+                        <p class="badge bg-success mb-3">NGO Account</p>
+                        
+                        <div class="alert alert-success border-0 small py-2 rounded-pill fw-bold mb-4 mx-auto" style="max-width: 250px;">
+                            ID: {{ ngo.ngo_id }}
+                        </div>
+                        
+                        <div class="text-start mt-3">
+                            <p><strong>Organization:</strong> {{ ngo.ngo_name }}</p>
+                            <p><strong>Phone:</strong> {{ ngo.phone }}</p>
+                            <p><strong>Address:</strong> {{ ngo.address }}</p>
+                        </div>
+                    {% elif volunteer %}
+                        <p class="badge bg-primary mb-3">Volunteer Account</p>
+                        
+                        <div class="alert alert-primary border-0 small py-2 rounded-pill fw-bold mb-4 mx-auto" style="max-width: 250px;">
+                            ID: {{ volunteer.volunteer_id }}
+                        </div>
+                        
+                        <div class="text-start mt-3">
+                            <p><strong>City:</strong> {{ volunteer.city }}</p>
+                            <p><strong>Phone:</strong> {{ volunteer.phone }}</p>
+                        </div>
+                    {% else %}
+                        <p class="badge bg-secondary mb-4">Staff Account</p>
+                    {% endif %}
+
+                    <div class="mt-4">
+                        <a href="{% url 'home' %}" class="btn btn-outline-success rounded-pill px-4">Home</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,85 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="container mt-4">
+    <div class="row mb-4">
+        <div class="col-md-4">
+            <div class="card bg-success text-white p-4 shadow border-0" style="border-radius: 15px;">
+                <h5 class="text-uppercase small fw-bold">Successful Deliveries</h5>
+                <h2 class="display-4 fw-bold mb-0">{{ success_count }}</h2>
+                <i class="bi bi-check-circle-fill position-absolute bottom-0 end-0 m-3 opacity-25" style="font-size: 3rem;"></i>
+            </div>
+        </div>
+    </div>
+
+    <h3 class="fw-bold mb-3">Available Pickup Requests</h3>
+    <div class="card shadow-sm border-0 mb-5">
+        <div class="table-responsive">
+            <table class="table table-hover align-middle mb-0">
+                <thead class="table-dark">
+                    <tr>
+                        <th class="ps-4">Food Item</th>
+                        <th>NGO Name</th>
+                        <th>Pickup Address</th>
+                        <th class="text-center">Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for req in pending_requests %}
+                    <tr>
+                        <td class="ps-4 fw-bold">{{ req.food.name }}</td>
+                        <td>{{ req.ngo_name }}</td>
+                        <td><small class="text-muted">{{ req.address }}</small></td>
+                        <td class="text-center">
+                            <a href="{% url 'accept_delivery' req.id %}" class="btn btn-primary btn-sm px-4 rounded-pill">
+                                Claim Delivery
+                            </a>
+                        </td>
+                    </tr>
+                    {% empty %}
+                    <tr>
+                        <td colspan="4" class="text-center py-4 text-muted">
+                            <i class="bi bi-inbox mb-2 d-block" style="font-size: 2rem;"></i>
+                            No pending requests available at the moment.
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <h3 class="fw-bold mb-3">My Delivery History</h3>
+    <div class="card shadow-sm border-0">
+        <div class="table-responsive">
+            <table class="table table-sm align-middle mb-0">
+                <thead class="table-light">
+                    <tr>
+                        <th class="ps-4">Food</th>
+                        <th>Status</th>
+                        <th class="text-end pe-4">Date</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for task in my_tasks %}
+                    <tr>
+                        <td class="ps-4">{{ task.food.name }}</td>
+                        <td>
+                            <span class="badge bg-success rounded-pill px-3">
+                                <i class="bi bi-check2-all me-1"></i> Delivered
+                            </span>
+                        </td>
+                        <td class="text-end pe-4 text-muted small">
+                            {{ task.requested_at|date:"M d, Y" }}
+                        </td>
+                    </tr>
+                    {% empty %}
+                    <tr>
+                        <td colspan="3" class="text-center py-3 text-muted italic">You haven't made any deliveries yet.</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+{% endblock %}

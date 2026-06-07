@@ -1,0 +1,51 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="row justify-content-center mt-5 mb-5">
+    <div class="col-md-5">
+        <div class="card shadow border-0" style="border-radius: 15px;">
+            <div class="card-header bg-dark text-white text-center" style="border-radius: 15px 15px 0 0;">
+                <h3 class="mb-0">Volunteer Sign Up</h3>
+            </div>
+            <div class="card-body p-4">
+                {% if messages %}
+                    {% for message in messages %}
+                        <div class="alert alert-danger small p-2 text-center" role="alert">
+                            {{ message }}
+                        </div>
+                    {% endfor %}
+                {% endif %}
+
+                <form method="POST" action="{% url 'register_volunteer' %}">
+                    {% csrf_token %}
+                    
+                    <h5 class="text-muted border-bottom pb-2 mb-3">Account Credentials</h5>
+                    <div class="mb-3">
+                        <label class="form-label fw-bold">Username</label>
+                        <input type="text" name="username" class="form-control" placeholder="For system indexing" required>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label fw-bold">Password</label>
+                        <input type="password" name="password" class="form-control" placeholder="Choose a password" required>
+                    </div>
+
+                    <h5 class="text-muted border-bottom pb-2 mb-3 mt-4">Personal Details</h5>
+                    <div class="mb-3">
+                        <label class="form-label fw-bold">Full Name</label>
+                        <input type="text" name="v_name" class="form-control" required>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label fw-bold">Phone Number</label>
+                        <input type="text" name="phone" class="form-control" required>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label fw-bold">Service Area/City</label>
+                        <input type="text" name="area" class="form-control" placeholder="e.g. Mysore" required>
+                    </div>
+
+                    <button type="submit" class="btn btn-dark w-100 py-2 fw-bold rounded-pill shadow-sm">Join FoodBridge</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

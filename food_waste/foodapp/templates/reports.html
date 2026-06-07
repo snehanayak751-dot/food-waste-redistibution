@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+{% block content %}
+<h2 class="mb-4">Full Donation Report</h2>
+<div class="table-responsive">
+  <table class="table table-bordered table-hover">
+    <thead class="table-dark">
+      <tr>
+        <th>Donor</th>
+        <th>Food Item</th>
+        <th>Quantity</th>
+        <th>Status</th>
+        <th>Requested by NGO</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for row in rows %}
+      <tr>
+        <td>{{ row.0 }}</td>
+        <td>{{ row.1 }}</td>
+        <td>{{ row.2 }}</td>
+        <td>{{ row.3 }}</td>
+        <td>{{ row.4|default:"Not yet requested" }}</td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+{% endblock %}
